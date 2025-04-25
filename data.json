@@ -1,0 +1,35 @@
+{
+  "bio": {
+    "name": "Nariman Movaffaghi"
+  },
+  "experiences": [
+    {
+      "period": "2022 - Now",
+      "company": "Railtown",
+      "role": "Frontend Engineer (Reactjs)"
+    },
+    {
+      "period": "2020 - 2022",
+      "company": "[Private company]",
+      "role": "Frontend Developer (Reactjs)"
+    },
+    {
+      "period": "2019 - 2020",
+      "company": "Lima",
+      "role": "Frontend Developer (Vuejs)"
+    }
+  ],
+  "projects": [
+    { "date": "11 Oct 2023", "title": "Z•RO - Extendable react framework" },
+    { "date": "11 Oct 2023", "title": "Spotify Status for GitHub Profile" }
+  ],
+  "posts": [
+    {
+      "date": "11 Oct 2023",
+      "title": "How to create Z•RO App",
+      "readTime": "6 min read",
+      "highlight": true
+    },
+    { "date": "11 Oct 2023", "title": "Z•RO", "readTime": "3 min read" }
+  ]
+}
