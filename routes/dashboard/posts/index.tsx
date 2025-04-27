@@ -157,8 +157,9 @@ export const columns: ColumnDef<Post>[] = [
                   className="flex-grow"
                   variant="destructive"
                   size="sm"
+                  disabled={deletePostAction.isPending}
                 >
-                  Delete
+                  {deletePostAction.isPending ? "Deleting..." : "Delete"}
                 </Button>
               </form>
             </PopoverContent>
@@ -216,7 +217,7 @@ export default function PostsPage() {
         </div>
         <DrawerContent>
           <DrawerHeader>
-            <DrawerTitle>New Post</DrawerTitle>
+            <DrawerTitle>{editingPost ? "Edit" : "New"} Post</DrawerTitle>
             <DrawerDescription>Create and share a new post.</DrawerDescription>
           </DrawerHeader>
           <form
@@ -280,8 +281,12 @@ export default function PostsPage() {
               )}
             </div>
             <DrawerFooter className="flex flex-row w-full">
-              <Button type="submit" className="flex-grow">
-                Submit
+              <Button
+                type="submit"
+                className="flex-grow"
+                disabled={createOrUpdatePostAction.isPending}
+              >
+                {createOrUpdatePostAction.isPending ? "Saving..." : "Save"}
               </Button>
               <DrawerClose asChild id="drawer-close">
                 <Button type="button" variant="outline" className="flex-grow">

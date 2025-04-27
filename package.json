@@ -19,7 +19,7 @@
     "@radix-ui/react-switch": "^1.2.2",
     "@radix-ui/react-tooltip": "^1.2.4",
     "@tanstack/react-table": "^8.21.3",
-    "@zro/auth": "^0.0.6",
+    "@zro/auth": "^0.0.8",
     "@zro/db": "^0.0.3",
     "@zro/logger": "^0.0.5",
     "class-variance-authority": "^0.7.1",
@@ -34,7 +34,7 @@
     "tailwind-merge": "^3.2.0",
     "vaul": "^1.1.2",
     "zod": "4.0.0-beta.20250424T163858",
-    "zro": "^0.0.52"
+    "zro": "^0.0.54"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.1.3",

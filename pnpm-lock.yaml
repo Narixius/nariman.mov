@@ -39,14 +39,14 @@ importers:
         specifier: ^8.21.3
         version: 8.21.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@zro/auth':
-        specifier: ^0.0.6
-        version: 0.0.6(zro@0.0.52(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.8.3)(vite@6.3.3(@types/node@22.15.2)(jiti@2.4.2)(lightningcss@1.29.2)))
+        specifier: ^0.0.8
+        version: 0.0.8(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(zro@0.0.54(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.8.3)(vite@6.3.3(@types/node@22.15.2)(jiti@2.4.2)(lightningcss@1.29.2)))
       '@zro/db':
         specifier: ^0.0.3
-        version: 0.0.3(@libsql/client@0.15.4)(drizzle-orm@0.42.0(@libsql/client@0.15.4))(zro@0.0.52(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.8.3)(vite@6.3.3(@types/node@22.15.2)(jiti@2.4.2)(lightningcss@1.29.2)))
+        version: 0.0.3(@libsql/client@0.15.4)(drizzle-orm@0.42.0(@libsql/client@0.15.4))(zro@0.0.54(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.8.3)(vite@6.3.3(@types/node@22.15.2)(jiti@2.4.2)(lightningcss@1.29.2)))
       '@zro/logger':
         specifier: ^0.0.5
-        version: 0.0.5(zro@0.0.52(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.8.3)(vite@6.3.3(@types/node@22.15.2)(jiti@2.4.2)(lightningcss@1.29.2)))
+        version: 0.0.5(zro@0.0.54(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.8.3)(vite@6.3.3(@types/node@22.15.2)(jiti@2.4.2)(lightningcss@1.29.2)))
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -84,8 +84,8 @@ importers:
         specifier: 4.0.0-beta.20250424T163858
         version: 4.0.0-beta.20250424T163858
       zro:
-        specifier: ^0.0.52
-        version: 0.0.52(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.8.3)(vite@6.3.3(@types/node@22.15.2)(jiti@2.4.2)(lightningcss@1.29.2))
+        specifier: ^0.0.54
+        version: 0.0.54(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.8.3)(vite@6.3.3(@types/node@22.15.2)(jiti@2.4.2)(lightningcss@1.29.2))
     devDependencies:
       '@tailwindcss/vite':
         specifier: ^4.1.3
@@ -1331,9 +1331,11 @@ packages:
   '@zod/core@0.9.0':
     resolution: {integrity: sha512-bVfPiV2kDUkAJ4ArvV4MHcPZA8y3xOX6/SjzSy2kX2ACopbaaAP4wk6hd/byRmfi9MLNai+4SFJMmcATdOyclg==}
 
-  '@zro/auth@0.0.6':
-    resolution: {integrity: sha512-9Ld9CNx/LdfD9sOvLw4MJrG6Sne8IPbKpf3v7muC1xESsW/a3Nu+3+Tyo2chzEJceC6wzZnDbc1Zjg10N1CHsQ==}
+  '@zro/auth@0.0.8':
+    resolution: {integrity: sha512-Iqm+xEzrbjeaf/T1h2IowwdW90EzZWClhkYp8Ud2+gSH3YIk8RhTqmEqX8xqx8OIoxDUqguMMEzPyw9ks6fvMg==}
     peerDependencies:
+      react: '>=19'
+      react-dom: '>=19'
       zro: ^*
 
   '@zro/db@0.0.3':
@@ -1667,8 +1669,8 @@ packages:
       sqlite3:
         optional: true
 
-  electron-to-chromium@1.5.142:
-    resolution: {integrity: sha512-Ah2HgkTu/9RhTDNThBtzu2Wirdy4DC9b0sMT1pUhbkZQ5U/iwmE+PHZX1MpjD5IkJCc2wSghgGG/B04szAx07w==}
+  electron-to-chromium@1.5.143:
+    resolution: {integrity: sha512-QqklJMOFBMqe46k8iIOwA9l2hz57V2OKMmP5eSWcUvwx+mASAsbU+wkF1pHjn9ZVSBPrsYWr4/W/95y5SwYg2g==}
 
   enhanced-resolve@5.18.1:
     resolution: {integrity: sha512-ZSW3ma5GkcQBIpwZTSRAI8N71Uuwgs93IezB7mf7R60tC8ZbJideoDNKjHn2O9KIlx6rkGTTEk1xUCK2E1Y2Yg==}
@@ -2694,14 +2696,11 @@ packages:
     resolution: {integrity: sha512-HUn0M24AUTMvjdkoMtH8fJz2FEd+k1xvtR9EoTrDUoVUi6o7xl5X+pST/vjk4T3GEQo2mJ9FlAvhWBm8dIdD4g==}
     engines: {node: '>=18'}
 
-  zod@3.24.3:
-    resolution: {integrity: sha512-HhY1oqzWCQWuUqvBFnsyrtZRhyPeR7SUGv+C4+MsisMuVfSPx8HpwWqH8tRahSlt6M3PiFAcoeFhZAqIXTxoSg==}
-
   zod@4.0.0-beta.20250424T163858:
     resolution: {integrity: sha512-fKhW+lEJnfUGo0fvQjmam39zUytARR2UdCEh7/OXJSBbKScIhD343K74nW+UUHu/r6dkzN6Uc/GqwogFjzpCXg==}
 
-  zro@0.0.52:
-    resolution: {integrity: sha512-p0Hd82EB1o6ZCDb9fgSlChUrlkRLU40sjOgSNpRSmjmGXGCT23+tpdn9P8KIoNsNonhWItFEYdrBUztrrdy5RA==}
+  zro@0.0.54:
+    resolution: {integrity: sha512-wpB6GaJjui6CnkqsOZ0FnWBB5Vzc87cWqpPBTyamy8f8weITN3gRVdiTDtBIpIWW0f6DkBNnUOTyZKYOnIVqGg==}
     hasBin: true
     peerDependencies:
       react: '>=19'
@@ -3713,18 +3712,22 @@ snapshots:
 
   '@zod/core@0.9.0': {}
 
-  '@zro/auth@0.0.6(zro@0.0.52(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.8.3)(vite@6.3.3(@types/node@22.15.2)(jiti@2.4.2)(lightningcss@1.29.2)))':
+  '@zro/auth@0.0.8(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(zro@0.0.54(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.8.3)(vite@6.3.3(@types/node@22.15.2)(jiti@2.4.2)(lightningcss@1.29.2)))':
     dependencies:
+      '@types/react': 19.1.2
+      '@types/react-dom': 19.1.2(@types/react@19.1.2)
       defu: 6.1.4
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
       tinyglobby: 0.2.13
-      zod: 3.24.3
-      zro: 0.0.52(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.8.3)(vite@6.3.3(@types/node@22.15.2)(jiti@2.4.2)(lightningcss@1.29.2))
+      zod: 4.0.0-beta.20250424T163858
+      zro: 0.0.54(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.8.3)(vite@6.3.3(@types/node@22.15.2)(jiti@2.4.2)(lightningcss@1.29.2))
 
-  '@zro/db@0.0.3(@libsql/client@0.15.4)(drizzle-orm@0.42.0(@libsql/client@0.15.4))(zro@0.0.52(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.8.3)(vite@6.3.3(@types/node@22.15.2)(jiti@2.4.2)(lightningcss@1.29.2)))':
+  '@zro/db@0.0.3(@libsql/client@0.15.4)(drizzle-orm@0.42.0(@libsql/client@0.15.4))(zro@0.0.54(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.8.3)(vite@6.3.3(@types/node@22.15.2)(jiti@2.4.2)(lightningcss@1.29.2)))':
     dependencies:
       db0: 0.3.2(@libsql/client@0.15.4)(drizzle-orm@0.42.0(@libsql/client@0.15.4))
       defu: 6.1.4
-      zro: 0.0.52(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.8.3)(vite@6.3.3(@types/node@22.15.2)(jiti@2.4.2)(lightningcss@1.29.2))
+      zro: 0.0.54(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.8.3)(vite@6.3.3(@types/node@22.15.2)(jiti@2.4.2)(lightningcss@1.29.2))
     optionalDependencies:
       drizzle-orm: 0.42.0(@libsql/client@0.15.4)
     transitivePeerDependencies:
@@ -3734,10 +3737,10 @@ snapshots:
       - mysql2
       - sqlite3
 
-  '@zro/logger@0.0.5(zro@0.0.52(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.8.3)(vite@6.3.3(@types/node@22.15.2)(jiti@2.4.2)(lightningcss@1.29.2)))':
+  '@zro/logger@0.0.5(zro@0.0.54(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.8.3)(vite@6.3.3(@types/node@22.15.2)(jiti@2.4.2)(lightningcss@1.29.2)))':
     dependencies:
       defu: 6.1.4
-      zro: 0.0.52(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.8.3)(vite@6.3.3(@types/node@22.15.2)(jiti@2.4.2)(lightningcss@1.29.2))
+      zro: 0.0.54(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.8.3)(vite@6.3.3(@types/node@22.15.2)(jiti@2.4.2)(lightningcss@1.29.2))
 
   acorn@8.14.1: {}
 
@@ -3764,7 +3767,7 @@ snapshots:
   browserslist@4.24.4:
     dependencies:
       caniuse-lite: 1.0.30001715
-      electron-to-chromium: 1.5.142
+      electron-to-chromium: 1.5.143
       node-releases: 2.0.19
       update-browserslist-db: 1.1.3(browserslist@4.24.4)
 
@@ -3961,7 +3964,7 @@ snapshots:
     optionalDependencies:
       '@libsql/client': 0.15.4
 
-  electron-to-chromium@1.5.142: {}
+  electron-to-chromium@1.5.143: {}
 
   enhanced-resolve@5.18.1:
     dependencies:
@@ -4954,13 +4957,11 @@ snapshots:
       cookie: 1.0.2
       youch-core: 0.3.2
 
-  zod@3.24.3: {}
-
   zod@4.0.0-beta.20250424T163858:
     dependencies:
       '@zod/core': 0.9.0
 
-  zro@0.0.52(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.8.3)(vite@6.3.3(@types/node@22.15.2)(jiti@2.4.2)(lightningcss@1.29.2)):
+  zro@0.0.54(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.8.3)(vite@6.3.3(@types/node@22.15.2)(jiti@2.4.2)(lightningcss@1.29.2)):
     dependencies:
       '@babel/core': 7.26.10
       '@babel/types': 7.27.0

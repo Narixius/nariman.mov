@@ -2,10 +2,21 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { useHead } from "zro/react";
-import { bio, experiences, posts, projects } from "../data.json";
+import { formatDateCompact } from "@/lib/date";
+import { calculateReadTime } from "@/lib/string";
+import { getOrm } from "@zro/db";
+import { posts as Posts } from "configs/db.schema";
+import { useHead, useLoaderData } from "zro/react";
+import { bio, experiences, projects } from "../data.json";
+
+export const loader = async () => {
+  return {
+    posts: await getOrm().select().from(Posts).all(),
+  };
+};
 
 export default function Homepage() {
+  const loaderData = useLoaderData<Routes["/"]>();
   useHead({
     title: bio.name,
   });
@@ -119,20 +130,20 @@ export default function Homepage() {
               Posts
             </h2>
             <div className="flex flex-col gap-2">
-              {posts.map((post, index) => (
+              {loaderData.posts.map((post, index) => (
                 <a
                   href="https://google.com"
                   key={index}
                   className="text-xs text-justify space-x-1 flex justify-between"
                 >
-                  <div>
+                  <div className="flex items-center gap-2">
                     <span className={`text-zinc-600 min-w-18 inline-block`}>
-                      {post.date}
+                      {formatDateCompact(post.createdAt)}
                     </span>
                     <span className={`text-zinc-400`}>{post.title}</span>
                   </div>
                   <div className="text-zinc-500 text-xs whitespace-nowrap">
-                    {post.readTime}
+                    {calculateReadTime(post.content)} min
                   </div>
                 </a>
               ))}

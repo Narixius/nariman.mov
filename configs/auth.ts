@@ -2,12 +2,14 @@ import { users } from "@/configs/db.schema";
 import { defineConfig } from "@zro/auth";
 import { GithubProvider } from "@zro/auth/providers/github";
 import { getOrm } from "@zro/db";
-import { inArray } from "drizzle-orm";
+import { eq, inArray } from "drizzle-orm";
 
 declare module "@zro/auth" {
   export interface User {
     id: number;
     email: string;
+    avatar?: string;
+    name: string;
   }
 }
 
@@ -37,6 +39,7 @@ export default defineConfig({
       },
       {
         async authenticate({ access_token, fetchUser }) {
+          const ghUser = await fetchUser();
           const userEmails = (await fetch(
             "https://api.github.com/user/emails",
             {
@@ -63,9 +66,22 @@ export default defineConfig({
             )
             .get();
           if (!user) throw new Error("Unauthorized");
+
+          await orm
+            .update(users)
+            .set({
+              avatar: ghUser.avatar_url,
+              name: ghUser.name || "",
+              updatedAt: new Date(),
+            })
+            .where(eq(users.id, user!.id))
+            .execute();
+
           return {
             id: user.id,
             email: user.email,
+            avatar: ghUser.avatar_url || user.avatar || undefined,
+            name: user.name,
           };
         },
       }

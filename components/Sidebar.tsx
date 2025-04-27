@@ -23,9 +23,13 @@ import {
   LogOut,
   NotepadText,
 } from "lucide-react";
-import { Link } from "zro/react";
+import { Link, useAction, useLoaderData, useNavigate } from "zro/react";
 
 export function AppSidebar() {
+  const data = useLoaderData<Routes["/dashboard/_layout"]>();
+  const logoutAction = useAction("/auth/logout", "logout");
+
+  const { url } = useNavigate();
   return (
     <Sidebar>
       <SidebarHeader>
@@ -36,7 +40,7 @@ export function AppSidebar() {
                 <span className="truncate font-semibold text-md">
                   Dashboard
                 </span>
-                <span className="truncate text-xs">nariman.mov</span>
+                <span className="truncate text-xs">{new URL(url).host}</span>
               </div>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -90,15 +94,14 @@ export function AppSidebar() {
                   className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
                 >
                   <Avatar className="h-8 w-8 rounded-lg">
-                    <AvatarImage
-                      src={"https://github.com/narixius.png"}
-                      alt="Narixius"
-                    />
+                    <AvatarImage src={data.user.avatar} alt={data.user.name} />
                     <AvatarFallback className="rounded-lg">NM</AvatarFallback>
                   </Avatar>
                   <div className="grid flex-1 text-left text-sm leading-tight">
-                    <span className="truncate font-semibold">Narixius</span>
-                    <span className="truncate text-xs">me@nariman.mov</span>
+                    <span className="truncate font-semibold">
+                      {data.user.name}
+                    </span>
+                    <span className="truncate text-xs">{data.user.email}</span>
                   </div>
                   <ChevronsUpDown className="ml-auto size-4" />
                 </SidebarMenuButton>
@@ -109,10 +112,14 @@ export function AppSidebar() {
                 align="center"
                 sideOffset={4}
               >
-                <DropdownMenuItem>
-                  <LogOut />
-                  Log out
-                </DropdownMenuItem>
+                <form {...logoutAction.formProps} className="contents">
+                  <DropdownMenuItem asChild>
+                    <button type="submit" className="w-full">
+                      <LogOut />
+                      Log out
+                    </button>
+                  </DropdownMenuItem>
+                </form>
               </DropdownMenuContent>
             </DropdownMenu>
           </SidebarMenuItem>
