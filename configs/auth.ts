@@ -46,6 +46,7 @@ export default defineConfig({
             {
               headers: {
                 Authorization: `Bearer ${access_token}`,
+                "User-Agent": "zro-auth",
               },
             }
           ).then((r) => r.json())) as {
