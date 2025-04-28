@@ -3,6 +3,7 @@ import { defineConfig } from "@zro/auth";
 import { GithubProvider } from "@zro/auth/providers/github";
 import { getOrm } from "@zro/db";
 import { eq, inArray } from "drizzle-orm";
+import { env } from "std-env";
 
 declare module "@zro/auth" {
   export interface User {
@@ -18,7 +19,7 @@ export default defineConfig({
   onLoginSuccessRedirect: "/dashboard",
   loginPage: "/auth",
   session: {
-    password: process.env.APP_KEY!,
+    password: env.APP_KEY!,
   },
   generateToken: (user) => {
     return JSON.stringify(user);
@@ -33,8 +34,8 @@ export default defineConfig({
   providers: [
     new GithubProvider(
       {
-        clientId: process.env.GITHUB_CLIENT_ID!,
-        clientSecret: process.env.GITHUB_CLIENT_SECRET!,
+        clientId: env.GITHUB_CLIENT_ID!,
+        clientSecret: env.GITHUB_CLIENT_SECRET!,
         scopes: ["read:user", "user:email"],
       },
       {

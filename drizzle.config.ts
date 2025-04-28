@@ -1,13 +1,11 @@
 import { defineConfig } from "drizzle-kit";
-
-console.log(process.env);
-console.log(import.meta?.env);
+import { env } from "std-env";
 
 export default defineConfig({
   dialect: "turso",
   dbCredentials: {
-    url: process.env.TURSO_DB_URL!,
-    authToken: process.env.TURSO_DB_AUTH_TOKEN!,
+    url: env.TURSO_DB_URL!,
+    authToken: env.TURSO_DB_AUTH_TOKEN!,
   },
   schema: "./configs/db.schema.ts",
   out: "./migrations",
