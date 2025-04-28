@@ -39,8 +39,8 @@ importers:
         specifier: ^8.21.3
         version: 8.21.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@zro/auth':
-        specifier: ^0.0.10
-        version: 0.0.10(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(zro@0.0.58(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(rollup@4.40.1)(typescript@5.8.3)(vite@6.3.3(@types/node@22.15.3)(jiti@2.4.2)(lightningcss@1.29.2))(workerd@1.20250424.0)(wrangler@4.13.2))
+        specifier: ^0.0.11
+        version: 0.0.11(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(zro@0.0.58(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(rollup@4.40.1)(typescript@5.8.3)(vite@6.3.3(@types/node@22.15.3)(jiti@2.4.2)(lightningcss@1.29.2))(workerd@1.20250424.0)(wrangler@4.13.2))
       '@zro/db':
         specifier: ^0.0.4
         version: 0.0.4(@libsql/client@0.15.4)(drizzle-orm@0.42.0(@libsql/client@0.15.4))(zro@0.0.58(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(rollup@4.40.1)(typescript@5.8.3)(vite@6.3.3(@types/node@22.15.3)(jiti@2.4.2)(lightningcss@1.29.2))(workerd@1.20250424.0)(wrangler@4.13.2))
@@ -1682,8 +1682,8 @@ packages:
   '@zod/core@0.9.0':
     resolution: {integrity: sha512-bVfPiV2kDUkAJ4ArvV4MHcPZA8y3xOX6/SjzSy2kX2ACopbaaAP4wk6hd/byRmfi9MLNai+4SFJMmcATdOyclg==}
 
-  '@zro/auth@0.0.10':
-    resolution: {integrity: sha512-BpZl4FLzSLS13WGozUOGDK9VChm7DMSM2JyFqfUOx1teGZM2s8sve9qJ+EF2ItPFqJMHeDjVnj9p7FlxfYrQ8g==}
+  '@zro/auth@0.0.11':
+    resolution: {integrity: sha512-WMR62whg/Vrm9LZiMjgzhiDm0zoHrTqdsGs4cJBZjtIi1bGiZXCkNS+wO8ObVV3bRBJF2InK/vD/BfLMVVRR3g==}
     peerDependencies:
       react: '>=19'
       react-dom: '>=19'
@@ -4474,7 +4474,7 @@ snapshots:
 
   '@zod/core@0.9.0': {}
 
-  '@zro/auth@0.0.10(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(zro@0.0.58(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(rollup@4.40.1)(typescript@5.8.3)(vite@6.3.3(@types/node@22.15.3)(jiti@2.4.2)(lightningcss@1.29.2))(workerd@1.20250424.0)(wrangler@4.13.2))':
+  '@zro/auth@0.0.11(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(zro@0.0.58(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(rollup@4.40.1)(typescript@5.8.3)(vite@6.3.3(@types/node@22.15.3)(jiti@2.4.2)(lightningcss@1.29.2))(workerd@1.20250424.0)(wrangler@4.13.2))':
     dependencies:
       '@types/react': 19.1.2
       '@types/react-dom': 19.1.2(@types/react@19.1.2)
