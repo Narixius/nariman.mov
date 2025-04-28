@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "zro dev",
     "build": "zro build",
-    "prepare": "zro prepare && pnpm run db:migrate",
+    "prepare": "zro prepare",
     "db:migrate": "drizzle-kit generate && drizzle-kit migrate",
     "db:studio": "drizzle-kit studio"
   },
