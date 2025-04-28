@@ -25,6 +25,7 @@ import { posts, type Post } from "@/configs/db.schema";
 import { formatDate } from "@/lib/date";
 import { PopoverClose } from "@radix-ui/react-popover";
 import type { ColumnDef } from "@tanstack/react-table";
+import { getUser } from "@zro/auth";
 import { getOrm } from "@zro/db";
 import { eq } from "drizzle-orm";
 import { Edit, PlusIcon, Trash2 } from "lucide-react";
@@ -49,13 +50,14 @@ export const actions = {
       publish: z.stringbool().optional().default(false),
     }),
     async handler({ id, content, title, publish }) {
+      const user = getUser()!;
       await getOrm()
         .insert(posts)
         .values({
           id,
           content,
           title,
-          userId: 1,
+          userId: user.id,
           status: publish ? "published" : "draft",
           createdAt: new Date(),
           updatedAt: new Date(),

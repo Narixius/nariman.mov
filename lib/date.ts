@@ -13,3 +13,10 @@ export const formatDateCompact = (date: Date | number) => {
     "dd MMM yyyy"
   );
 };
+
+export const formatDateWithoutDay = (date: Date | number) => {
+  return format(
+    new Date(typeof date === "number" ? date * 1000 : date),
+    "MMM yyyy"
+  );
+};

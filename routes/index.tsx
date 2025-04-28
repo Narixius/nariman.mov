@@ -2,16 +2,17 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { formatDateCompact } from "@/lib/date";
+import { formatDateCompact, formatDateWithoutDay } from "@/lib/date";
 import { calculateReadTime } from "@/lib/string";
 import { getOrm } from "@zro/db";
-import { posts as Posts } from "configs/db.schema";
+import { experiences as Experiences, posts as Posts } from "configs/db.schema";
 import { useHead, useLoaderData } from "zro/react";
-import { bio, experiences, projects } from "../data.json";
+import { bio, projects } from "../data.json";
 
 export const loader = async () => {
   return {
     posts: await getOrm().select().from(Posts).all(),
+    experiences: await getOrm().select().from(Experiences).all(),
   };
 };
 
@@ -91,13 +92,24 @@ export default function Homepage() {
               Experiences
             </h2>
             <div className="flex flex-col gap-2">
-              {experiences.map((exp, index) => (
+              {loaderData.experiences.map((exp, index) => (
                 <div key={index} className="text-xs text-justify space-x-1">
                   <span className={`text-zinc-600 min-w-18 inline-block`}>
-                    {exp.period}
+                    {formatDateWithoutDay(
+                      new Date((exp.startDate as unknown as number) * 1000)
+                    )}{" "}
+                    -{" "}
+                    {exp.endDate
+                      ? formatDateWithoutDay(
+                          new Date((exp.endDate as unknown as number) * 1000)
+                        )
+                      : "Now"}
                   </span>
                   <span className={`text-zinc-400`}>{exp.company}</span>
-                  <span className="text-zinc-400 leading-4"> {exp.role}</span>
+                  <span className="text-zinc-400 leading-4">
+                    {" "}
+                    {exp.description}
+                  </span>
                 </div>
               ))}
             </div>
