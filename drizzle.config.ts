@@ -1,5 +1,8 @@
 import { defineConfig } from "drizzle-kit";
-import { env } from "std-env";
+import { env, process } from "std-env";
+
+console.log(env.TURSO_DB_URL);
+console.log(process.env.TURSO_DB_URL);
 
 export default defineConfig({
   dialect: "turso",
