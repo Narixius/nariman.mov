@@ -1,5 +1,8 @@
 import { defineConfig } from "drizzle-kit";
 
+console.log(process.env);
+console.log(import?.meta?.env);
+
 export default defineConfig({
   dialect: "turso",
   dbCredentials: {
