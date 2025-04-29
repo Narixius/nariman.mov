@@ -17,6 +17,6 @@ export const formatDateCompact = (date: Date | number) => {
 export const formatDateWithoutDay = (date: Date | number) => {
   return format(
     new Date(typeof date === "number" ? date * 1000 : date),
-    "MMM yyyy"
+    "yyyy"
   );
 };

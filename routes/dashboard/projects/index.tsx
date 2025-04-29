@@ -1,7 +1,6 @@
 import { DashboardHeader } from "@/components/DashbaordHeader";
 import { DataTable } from "@/components/DataTable";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Drawer,
@@ -19,14 +18,13 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Switch } from "@/components/ui/switch";
-import { Textarea } from "@/components/ui/textarea";
-import { posts, type Post } from "@/configs/db.schema";
+import { projects, type Project } from "@/configs/db.schema";
 import { formatDate } from "@/lib/date";
 import { PopoverClose } from "@radix-ui/react-popover";
 import type { ColumnDef } from "@tanstack/react-table";
 import { getUser } from "@zro/auth";
 import { getOrm } from "@zro/db";
+import { format } from "date-fns";
 import { eq } from "drizzle-orm";
 import { Edit, PlusIcon, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -37,73 +35,63 @@ import { Action } from "zro/router";
 
 export const loader = async () => {
   return {
-    posts: await getOrm().select().from(posts).all(),
+    projects: await getOrm().select().from(projects).all(),
   };
 };
 
 export const actions = {
-  createPost: new Action({
+  createProject: new Action({
     input: z.object({
       id: z.coerce.number().optional() as z.ZodOptional<z.ZodNumber>,
       title: z.string().min(1),
-      content: z.string().min(1),
-      banner: z.string().optional(),
-      publish: z.stringbool().optional().default(false),
+      date: z.coerce.date() as z.ZodDate,
+      url: z.string().min(1),
     }),
-    async handler({ id, content, title, publish, banner }) {
+    async handler({ id, url, date, title }) {
       const user = getUser()!;
       await getOrm()
-        .insert(posts)
+        .insert(projects)
         .values({
           id,
-          content,
+          url,
           title,
-          banner,
+          date,
           userId: user.id,
-          status: publish ? "published" : "draft",
           createdAt: new Date(),
           updatedAt: new Date(),
         })
         .onConflictDoUpdate({
-          target: [posts.id],
+          target: [projects.id],
           set: {
-            content,
+            url,
             title,
-            banner,
-            status: publish ? "published" : "draft",
+            date,
             updatedAt: new Date(),
           },
         });
       return { ok: true };
     },
   }),
-  deletePost: new Action({
+  deleteProject: new Action({
     input: z.object({
       id: z.coerce.number() as z.ZodNumber,
     }),
     async handler({ id }) {
-      await await getOrm().delete(posts).where(eq(posts.id, id)).run();
+      await await getOrm().delete(projects).where(eq(projects.id, id)).run();
       return { ok: true };
     },
   }),
 };
 
-export const columns: ColumnDef<Post>[] = [
+export const columns: ColumnDef<Project>[] = [
   {
     accessorKey: "title",
     header: "Title",
     maxSize: 200,
   },
   {
-    accessorKey: "status",
-    header: "Status",
-    cell({ row }) {
-      const status = row.getValue("status") as string;
-      const variant = { published: "success", draft: "inactive" }[status];
-      return (
-        <Badge variant={variant as "success" | "inactive"}>{status}</Badge>
-      );
-    },
+    accessorKey: "url",
+    header: "URL",
   },
   {
     accessorKey: "createdAt",
@@ -123,14 +111,15 @@ export const columns: ColumnDef<Post>[] = [
     header: "Actions",
     accessorKey: "id",
     cell({ table, row }) {
-      const deletePostAction = (table.options.meta as any).deletePostAction;
-      const setEditingPost = (table.options.meta as any).setEditingPost;
+      const deleteProjectAction = (table.options.meta as any)
+        .deleteProjectAction;
+      const setEditingProject = (table.options.meta as any).setEditingProject;
       return (
         <div className="flex gap-2">
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => setEditingPost(row.original)}
+            onClick={() => setEditingProject(row.original)}
           >
             <Edit />
           </Button>
@@ -141,9 +130,9 @@ export const columns: ColumnDef<Post>[] = [
               </Button>
             </PopoverTrigger>
             <PopoverContent side="bottom" align="end">
-              <span>Are you sure you want to delete this post?</span>
+              <span>Are you sure you want to delete this project?</span>
               <form
-                {...deletePostAction.formProps}
+                {...deleteProjectAction.formProps}
                 className="flex gap-2 mt-2 w-full"
               >
                 <input type="hidden" name="id" value={row.original.id} />
@@ -162,9 +151,9 @@ export const columns: ColumnDef<Post>[] = [
                   className="flex-grow"
                   variant="destructive"
                   size="sm"
-                  disabled={deletePostAction.isPending}
+                  disabled={deleteProjectAction.isPending}
                 >
-                  {deletePostAction.isPending ? "Deleting..." : "Delete"}
+                  {deleteProjectAction.isPending ? "Deleting..." : "Delete"}
                 </Button>
               </form>
             </PopoverContent>
@@ -175,128 +164,134 @@ export const columns: ColumnDef<Post>[] = [
   },
 ];
 
-export default function PostsPage() {
-  const { posts } = useLoaderData<Routes["/dashboard/posts/"]>();
-  const [editingPost, setEditingPost] = useState<Post | null>(null);
-  const createOrUpdatePostAction = useAction("/dashboard/posts/", "createPost");
+export default function ProjectsPage() {
+  const { projects } = useLoaderData<Routes["/dashboard/projects/"]>();
+  const [editingProject, setEditingProject] = useState<Project | null>(null);
+  const createOrUpdateProjectAction = useAction(
+    "/dashboard/projects/",
+    "createProject"
+  );
 
   useEffect(() => {
-    if (!!createOrUpdatePostAction.data?.ok) {
-      toast("Post created successfully");
+    if (!!createOrUpdateProjectAction.data?.ok) {
+      toast("Project created successfully");
       document.getElementById("drawer-close")?.click();
     }
-  }, [createOrUpdatePostAction.data?.ok]);
-  const deletePostAction = useAction("/dashboard/posts/", "deletePost");
+  }, [createOrUpdateProjectAction.data?.ok]);
+  const deleteProjectAction = useAction(
+    "/dashboard/projects/",
+    "deleteProject"
+  );
   useEffect(() => {
-    if (!!deletePostAction.data?.ok) {
-      toast("Post deleted successfully");
+    if (!!deleteProjectAction.data?.ok) {
+      toast("Project deleted successfully");
     }
-  }, [deletePostAction.data?.ok]);
+  }, [deleteProjectAction.data?.ok]);
   useEffect(() => {
-    if (editingPost) {
+    if (editingProject) {
       document.getElementById("open-drawer")?.click();
     }
-  }, [editingPost]);
+  }, [editingProject]);
 
   const clearToasts = () => {
     toast.dismiss();
   };
   return (
     <div className="flex flex-col gap-2">
-      <Drawer direction="right" onClose={() => setEditingPost(null)}>
+      <Drawer direction="right" onClose={() => setEditingProject(null)}>
         <DashboardHeader>
-          <h1 className="text-zinc-100 font-14-bold text-xl">Posts</h1>
+          <h1 className="text-zinc-100 font-14-bold text-xl">Projects</h1>
           <DrawerTrigger asChild>
             <Button size="sm" id="open-drawer" onClick={clearToasts}>
               <PlusIcon />
-              Add Post
+              Add Project
             </Button>
           </DrawerTrigger>
         </DashboardHeader>
         <div className="mt-4">
           <DataTable
             columns={columns}
-            data={posts}
-            meta={{ deletePostAction, setEditingPost }}
+            data={projects}
+            meta={{ deleteProjectAction, setEditingProject }}
           />
         </div>
         <DrawerContent>
           <DrawerHeader>
-            <DrawerTitle>{editingPost ? "Edit" : "New"} Post</DrawerTitle>
-            <DrawerDescription>Create and share a new post.</DrawerDescription>
+            <DrawerTitle>{editingProject ? "Edit" : "New"} Project</DrawerTitle>
+            <DrawerDescription>
+              Create and share a new project.
+            </DrawerDescription>
           </DrawerHeader>
           <form
-            {...createOrUpdatePostAction.formProps}
-            key={editingPost?.id}
+            {...createOrUpdateProjectAction.formProps}
+            key={editingProject?.id}
             className="contents"
           >
             <div className="px-4 flex flex-col gap-4">
-              {editingPost && (
-                <input type="hidden" name="id" value={editingPost.id} />
+              {editingProject && (
+                <input type="hidden" name="id" value={editingProject.id} />
               )}
               <div className="flex flex-col gap-1">
                 <label htmlFor="title" className="text-sm font-medium">
                   Title
                 </label>
                 <Input
-                  aria-invalid={!!createOrUpdatePostAction.errors.title}
+                  aria-invalid={!!createOrUpdateProjectAction.errors.title}
                   name="title"
                   id="title"
-                  defaultValue={editingPost?.title}
+                  defaultValue={editingProject?.title}
                 />
-                {createOrUpdatePostAction.errors.title && (
+                {createOrUpdateProjectAction.errors.title && (
                   <span className="text-red-500 text-sm">
-                    {createOrUpdatePostAction.errors.title}
+                    {createOrUpdateProjectAction.errors.title}
                   </span>
                 )}
               </div>
               <div className="flex flex-col gap-1">
-                <label htmlFor="banner" className="text-sm font-medium">
-                  Banner URL
+                <label htmlFor="url" className="text-sm font-medium">
+                  Project URL
                 </label>
                 <Input
-                  aria-invalid={!!createOrUpdatePostAction.errors.banner}
-                  name="banner"
-                  id="banner"
-                  defaultValue={editingPost?.banner || ""}
+                  aria-invalid={!!createOrUpdateProjectAction.errors.url}
+                  name="url"
+                  id="url"
+                  defaultValue={editingProject?.url || ""}
                 />
-                {createOrUpdatePostAction.errors.banner && (
+                {createOrUpdateProjectAction.errors.url && (
                   <span className="text-red-500 text-sm">
-                    {createOrUpdatePostAction.errors.banner}
+                    {createOrUpdateProjectAction.errors.url}
                   </span>
                 )}
               </div>
-              <div className="flex flex-col gap-1">
-                <label htmlFor="content" className="text-sm font-medium">
-                  Content
+              <div className="flex flex-col gap-1 flex-grow w-full">
+                <label htmlFor="date" className="text-sm font-medium">
+                  Date
                 </label>
-                <Textarea
-                  aria-invalid={!!createOrUpdatePostAction.errors.content}
-                  name="content"
-                  id="content"
-                  defaultValue={editingPost?.content}
-                />
-                {createOrUpdatePostAction.errors.content && (
-                  <span className="text-red-500 text-sm">
-                    {createOrUpdatePostAction.errors.content}
-                  </span>
-                )}
-              </div>
-              <div className="flex flex-row justify-between gap-1">
-                <label htmlFor="publish" className="text-sm font-medium">
-                  Save as published
-                </label>
-                <Switch
-                  name="publish"
-                  defaultChecked={
-                    editingPost ? editingPost?.status === "published" : true
+                <Input
+                  aria-invalid={!!createOrUpdateProjectAction.errors.date}
+                  name="date"
+                  id="date"
+                  type="date"
+                  defaultValue={
+                    editingProject?.date
+                      ? format(
+                          (editingProject?.date as unknown as number) * 1000,
+                          "yyyy-MM-dd"
+                        )
+                      : ""
                   }
                 />
+                {createOrUpdateProjectAction.errors.date && (
+                  <span className="text-red-500 text-sm">
+                    {createOrUpdateProjectAction.errors.date}
+                  </span>
+                )}
               </div>
-              {createOrUpdatePostAction.errors.root && (
+
+              {createOrUpdateProjectAction.errors.root && (
                 <Alert variant="destructive">
                   <AlertDescription>
-                    {createOrUpdatePostAction.errors.root}
+                    {createOrUpdateProjectAction.errors.root}
                   </AlertDescription>
                 </Alert>
               )}
@@ -305,9 +300,9 @@ export default function PostsPage() {
               <Button
                 type="submit"
                 className="flex-grow"
-                disabled={createOrUpdatePostAction.isPending}
+                disabled={createOrUpdateProjectAction.isPending}
               >
-                {createOrUpdatePostAction.isPending ? "Saving..." : "Save"}
+                {createOrUpdateProjectAction.isPending ? "Saving..." : "Save"}
               </Button>
               <DrawerClose asChild id="drawer-close">
                 <Button type="button" variant="outline" className="flex-grow">

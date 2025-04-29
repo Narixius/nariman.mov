@@ -10,7 +10,8 @@ import { guest } from "@zro/auth";
 import { useGithubButtonState } from "@zro/auth/providers/github/react";
 import { Github } from "lucide-react";
 import { useHead, useNavigate } from "zro/react";
-export const middlewares = [guest("/tasks")] as const;
+
+export const middlewares = [guest("/dashboard")] as const;
 
 export default function LoginPage() {
   const { url } = useNavigate();

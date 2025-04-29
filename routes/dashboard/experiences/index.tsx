@@ -72,7 +72,6 @@ export const actions = {
           companyUrl,
           startDate,
           endDate,
-          description,
           userId: user.id,
           createdAt: new Date(),
           updatedAt: new Date(),
@@ -85,7 +84,6 @@ export const actions = {
             companyUrl,
             startDate,
             endDate,
-            description,
             userId: user.id,
             updatedAt: new Date(),
           },
@@ -350,10 +348,13 @@ export default function ExperiencesPage() {
                     type="date"
                     defaultValue={
                       editingExperience?.endDate
-                        ? new Date(
-                            (editingExperience?.endDate as unknown as number) *
-                              1000
-                          ).toString()
+                        ? format(
+                            new Date(
+                              (editingExperience?.endDate as unknown as number) *
+                                1000
+                            ),
+                            "yyyy-MM-dd"
+                          )
                         : ""
                     }
                   />
@@ -363,22 +364,6 @@ export default function ExperiencesPage() {
                     </span>
                   )}
                 </div>
-              </div>
-              <div className="flex flex-col gap-1">
-                <label htmlFor="description" className="text-sm font-medium">
-                  Description
-                </label>
-                <Input
-                  aria-invalid={!!errors.description}
-                  name="description"
-                  id="description"
-                  defaultValue={editingExperience?.description}
-                />
-                {errors.description && (
-                  <span className="text-red-500 text-sm">
-                    {errors.description}
-                  </span>
-                )}
               </div>
 
               {errors.root && (

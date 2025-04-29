@@ -33,13 +33,11 @@ export default function DashboardLayout() {
 
 export const ErrorBoundary = (props: ErrorBoundaryProps) => {
   return (
-    <Layout>
-      <div className="flex flex-col gap-2 items-center justify-center min-h-full">
-        <Unlink />
-        {props.error?.message?.toLowerCase().includes("page not found")
-          ? "Page not found"
-          : "error!"}
-      </div>
-    </Layout>
+    <div className="flex flex-col gap-2 items-center justify-center min-h-full">
+      <Unlink />
+      {props.error?.message?.toLowerCase().includes("page not found")
+        ? "Page not found"
+        : "error asdf !"}
+    </div>
   );
 };

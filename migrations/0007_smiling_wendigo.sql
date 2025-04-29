@@ -1,0 +1,1 @@
+ALTER TABLE `socialMedia` RENAME COLUMN "name" TO "platform";

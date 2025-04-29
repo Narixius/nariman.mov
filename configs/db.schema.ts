@@ -15,7 +15,8 @@ export const usersRelations = relations(users, ({ many }) => ({
 
 export const bio = sqliteTable("bio", {
   id: integer("id").primaryKey({ autoIncrement: true }),
-  name: text("title").notNull(),
+  name: text("name").notNull(),
+  avatar: text("avatar"),
   description: text("description").notNull(),
   createdAt: integer("createdAt", { mode: "timestamp" }).notNull(),
   updatedAt: integer("updatedAt", { mode: "timestamp" }).notNull(),
@@ -32,7 +33,7 @@ export const bioRelations = relations(bio, ({ one }) => ({
 
 export const socialMedias = sqliteTable("socialMedia", {
   id: integer("id").primaryKey({ autoIncrement: true }),
-  platform: text("name").notNull(),
+  platform: text("platform").notNull(),
   url: text("url").notNull(),
   createdAt: integer("createdAt", { mode: "timestamp" }).notNull(),
   updatedAt: integer("updatedAt", { mode: "timestamp" }).notNull(),
@@ -52,6 +53,7 @@ export const posts = sqliteTable("posts", {
   title: text("title").notNull(),
   status: text("status", { enum: ["published", "draft"] }).notNull(),
   content: text("content").notNull(),
+  banner: text("banner"),
   createdAt: integer("createdAt", { mode: "timestamp" }).notNull(),
   updatedAt: integer("updatedAt", { mode: "timestamp" }).notNull(),
   userId: integer("userId").references(() => users.id, {
@@ -73,7 +75,6 @@ export const experiences = sqliteTable("experiences", {
   companyUrl: text("companyUrl"),
   startDate: integer("startDate", { mode: "timestamp" }).notNull(),
   endDate: integer("endDate", { mode: "timestamp" }),
-  description: text("description").notNull(),
   createdAt: integer("createdAt", { mode: "timestamp" }).notNull(),
   updatedAt: integer("updatedAt", { mode: "timestamp" }).notNull(),
   userId: integer("userId").references(() => users.id, {
@@ -90,7 +91,6 @@ export const experiencesRelations = relations(experiences, ({ one }) => ({
 export const projects = sqliteTable("projects", {
   id: integer("id").primaryKey({ autoIncrement: true }),
   title: text("title").notNull(),
-  description: text("description").notNull(),
   date: integer("date", { mode: "timestamp" }).notNull(),
   url: text("url").notNull(),
   createdAt: integer("createdAt", { mode: "timestamp" }).notNull(),

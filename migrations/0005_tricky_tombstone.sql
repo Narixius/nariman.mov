@@ -1,0 +1,1 @@
+ALTER TABLE `bio` RENAME COLUMN "title" TO "name";

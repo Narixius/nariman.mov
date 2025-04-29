@@ -28,7 +28,6 @@ import { Link, useAction, useLoaderData, useNavigate } from "zro/react";
 export function AppSidebar() {
   const data = useLoaderData<Routes["/dashboard/_layout"]>();
   const logoutAction = useAction("/auth/logout", "logout");
-
   const { url } = useNavigate();
   return (
     <Sidebar>
