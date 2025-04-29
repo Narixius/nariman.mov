@@ -26,7 +26,7 @@ export const loader = async () => {
 };
 export default function PostPage() {
   return (
-    <div className="px-4 w-[480px] max-w-[480px] mx-auto py-8 flex flex-col gap-4">
+    <div className="px-4 w-[510px] max-w-[510px] mx-auto py-8 flex flex-col gap-4">
       <Suspense fallback={<PostLoader />}>
         <PostContent />
       </Suspense>
@@ -59,7 +59,7 @@ function PostContent() {
         <img
           src={post.banner}
           alt={post.title}
-          className="w-full object-cover mt-4 rounded-md aspect-[480/256]"
+          className="w-full object-cover mt-4 rounded-md aspect-[510/256]"
         />
       )}
       <div className="flex flex-col gap-4">
@@ -73,7 +73,7 @@ function PostLoader() {
   return (
     <>
       <div className="h-9 animate-pulse bg-zinc-700 w-1/2 rounded-md"></div>
-      <div className="w-full object-cover mt-4 rounded-md aspect-[480/256] animate-pulse bg-zinc-700" />
+      <div className="w-full object-cover mt-4 rounded-md aspect-[510/256] animate-pulse bg-zinc-700" />
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-2 mt-1">
           <div className="h-4 animate-pulse bg-zinc-700 w-full rounded-md"></div>

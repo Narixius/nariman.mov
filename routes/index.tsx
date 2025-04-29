@@ -52,7 +52,7 @@ export default function Homepage() {
   });
   return (
     <div className="bg-zinc-900 w-full flex justify-center">
-      <Card className="bg-transparent border-0 px-4 w-[480px] max-w-[480px] pt-8 pb-4 min-h-full">
+      <Card className="bg-transparent border-0 px-4 w-[510px] max-w-[510px] pt-8 pb-4 min-h-full">
         <CardContent className="p-0 flex flex-col justify-between min-h-full gap-12">
           {/* Profile Section */}
           <div className="flex flex-col gap-12">
